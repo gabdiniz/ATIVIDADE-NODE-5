@@ -1,5 +1,6 @@
 const Professores = require("../database/professores");
 const { Router } = require("express");
+const { Op } = require("sequelize");
 
 const router = Router();
 
@@ -27,6 +28,53 @@ router.get("/professores/:id", async (req, res) => {
   catch (e) {
     console.log(e);
     res.status(500).json({ message: "Ocorreu um erro." });
+  }
+})
+
+router.get("/professores/materia/:materia", async (req, res) => {
+  try {
+    const professores = await Professores.findAll({where: {materia: req.params.materia}});
+    if (professores) {
+      res.status(200).json(professores);
+    }
+    else {
+      res.status(404).json({ message: "Nenhum professor encontrado."})
+    }
+  }
+  catch (e) {
+    console.log(e);
+    res.status(500).json({ message: "Ocorreu um erro." });
+  }
+});
+
+router.get("/professores/turno/:turno", async (req, res) => {
+  try {
+    const professores = await Professores.findAll({where: {turno: req.params.turno}});
+    if (professores) {
+      res.status(200).json(professores);
+    }
+    else {
+      res.status(404).json({ message: "Nenhum professor encontrado."})
+    }
+  }
+  catch (e) {
+    console.log(e);
+    res.status(500).json({ message: "Ocorreu um erro." });
+  }
+});
+
+router.get("/professores/salario/:salario", async (req, res) => {
+  try {
+    const professores = await Professores.findAll({where: { salario: { [Op.gt]: Number(req.params.salario) } }});
+    if (professores) {
+      res.status(200).json(professores);
+    }
+    else {
+      res.status(404).json( { message: "Nenhum professor encontrado." })
+    }
+  }
+  catch (e) {
+    res.status(500).json( { message: "Ocorreu um erro." });
   }
 })
 

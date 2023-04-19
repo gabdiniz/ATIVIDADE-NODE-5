@@ -14,10 +14,10 @@ const rotasAlunos = require("./routes/alunos");
 const rotasProfessores = require("./routes/professores");
 
 app.use(rotasProfessores);
-app.use(rotasAlunos)
+app.use(rotasAlunos);
 app.use(rotasTurmas);
 
 app.listen(3000, () => {
-  connection.sync({ force: true });
+  connection.sync();
   console.log("Servidor rodando em http://localhost:3000/")
 })
