@@ -7,9 +7,13 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 const { connection, authenticate } = require("./database/database");
+authenticate(connection);
 
+const rotasTurmas = require("./routes/turmas");
+
+app.use(rotasTurmas);
 
 app.listen(3000, () => {
-  connection.sync();
+  connection.sync({ force: true});
   console.log("Servidor rodando em http://localhost:3000/")
 })
