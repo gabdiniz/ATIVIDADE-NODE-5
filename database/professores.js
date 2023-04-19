@@ -11,7 +11,7 @@ const Professores = connection.define("professores", {
     allowNull: false
   },
   salario: {
-    type: DataTypes.NUMBER,
+    type: DataTypes.DOUBLE,
     allowNull: false
   },
   turno: {

@@ -20,4 +20,8 @@ const Aluno = require("./aluno");
 Turma.hasMany(Aluno);
 Aluno.belongsTo(Turma);
 
+const Professores = require("./professores");
+Professores.hasOne(Turma);
+Turma.belongsTo(Professores);
+
 module.exports = Turma;

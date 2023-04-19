@@ -1,3 +1,4 @@
+const Professores = require("../database/professores");
 const Turma  = require("../database/turma");
 const { Router } = require("express");
 
@@ -31,10 +32,16 @@ router.get("/turmas/:id", async (req, res) => {
 });
 
 router.post("/turmas", async (req, res) => {
-  const { classe, academico, periodo } = req.body;
+  const { classe, academico, periodo, professoreId } = req.body;
   try {
-    const novaTurma = await Turma.create({ classe, academico, periodo });
-    res.status(201).json(novaTurma);
+    const professor = await Professores.findByPk(professoreId);
+    if (professor) {
+      const novaTurma = await Turma.create({ classe, academico, periodo, professoreId });
+      res.status(201).json(novaTurma);
+    }
+    else {
+      res.status(404).json({ message: "Professor não encontrado." });
+    }
   }
   catch (e) {
     console.log(e);
@@ -43,15 +50,21 @@ router.post("/turmas", async (req, res) => {
 });
 
 router.put("/turmas/:id", async (req, res) => {
-  const { classe, academico, periodo } = req.body;
-  const turma = await Turma.findByPk(req.params.id);
+  const { classe, academico, periodo, professoreId } = req.body;
   try {
-    if (turma) {
-      await turma.update({ classe, academico, periodo });
-      res.status(200).json("Turma editada.");
+    const professor = await Professores.findByPk(professoreId);
+    if (professor) {
+      const turma = await Turma.findByPk(req.params.id);
+      if (turma) {
+        await turma.update({ classe, academico, periodo, professoreId });
+        res.status(200).json("Turma editada.");
+      }
+      else {
+        res.status(404).json("Turma não encontrada.");
+      }
     }
     else {
-      res.status(404).json("Turma não encontrada.");
+      res.status(404).json("Professor não encontrado.");
     }
   }
   catch (e) {

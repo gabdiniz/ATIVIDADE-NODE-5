@@ -11,11 +11,13 @@ authenticate(connection);
 
 const rotasTurmas = require("./routes/turmas");
 const rotasAlunos = require("./routes/alunos");
+const rotasProfessores = require("./routes/professores");
 
+app.use(rotasProfessores);
 app.use(rotasAlunos)
 app.use(rotasTurmas);
 
 app.listen(3000, () => {
-  connection.sync({ force: true});
+  connection.sync({ force: true });
   console.log("Servidor rodando em http://localhost:3000/")
 })
