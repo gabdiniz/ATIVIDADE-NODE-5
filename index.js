@@ -10,7 +10,9 @@ const { connection, authenticate } = require("./database/database");
 authenticate(connection);
 
 const rotasTurmas = require("./routes/turmas");
+const rotasAlunos = require("./routes/alunos");
 
+app.use(rotasAlunos)
 app.use(rotasTurmas);
 
 app.listen(3000, () => {

@@ -11,7 +11,7 @@ const Aluno = connection.define("aluno", {
     allowNull: false
   },
   media: {
-    type: DataTypes.NUMBER,
+    type: DataTypes.DOUBLE,
     allowNull: false
   },
   curso: {
