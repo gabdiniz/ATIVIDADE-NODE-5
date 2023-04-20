@@ -80,6 +80,49 @@
  *               $ref: '#/components/schemas/Professores'
  *       404:
  *         description: Professor não encontrado.
+ *   put:
+ *    summary: Atualizar professor por id.
+ *    tags: [Professores]
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *        required: true
+ *        description: Id do professor.
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/Professores'
+ *    responses:
+ *      200:
+ *        description: Professor atualizado.
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Professores'
+ *      404:
+ *        description: Professor não encontrado.
+ *      500:
+ *        description: Ocorreu um erro.
+ *   delete:
+ *     summary: Remover professor por id.
+ *     tags: [Professores]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Id do professor.
+ *
+ *     responses:
+ *       200:
+ *         description: Professor removido.
+ *       404:
+ *         description: Professor não encontrado.
  * /professores/materia/{materia}:
  *   get:
  *     summary: Listar professor por materia.
@@ -138,49 +181,6 @@
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Professores'
- *       404:
- *         description: Professor não encontrado.
- *   put:
- *    summary: Atualizar professor por id.
- *    tags: [Professores]
- *    parameters:
- *      - in: path
- *        name: id
- *        schema:
- *          type: string
- *        required: true
- *        description: Id do professor.
- *    requestBody:
- *      required: true
- *      content:
- *        application/json:
- *          schema:
- *            $ref: '#/components/schemas/Professores'
- *    responses:
- *      200:
- *        description: Professor atualizado.
- *        content:
- *          application/json:
- *            schema:
- *              $ref: '#/components/schemas/Professores'
- *      404:
- *        description: Professor não encontrado.
- *      500:
- *        description: Ocorreu um erro.
- *   delete:
- *     summary: Remover professor por id.
- *     tags: [Professores]
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: true
- *         description: Id do professor.
- *
- *     responses:
- *       200:
- *         description: Professor removido.
  *       404:
  *         description: Professor não encontrado.
  */
