@@ -8,7 +8,8 @@ const Aluno = connection.define("aluno", {
   },
   matricula: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
+    unique: true
   },
   media: {
     type: DataTypes.DOUBLE,
