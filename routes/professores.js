@@ -29,7 +29,7 @@
  * tags:
  *   name: Professores
  *   description: CRUD professores
- * /Professores:
+ * /professores:
  *   get:
  *     summary: Listar todos professores
  *     tags: [Professores]
