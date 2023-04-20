@@ -4,15 +4,39 @@ const { connection } = require("./database");
 const Turma = connection.define("turma", {
   classe: {
     type: DataTypes.STRING(3),
-    allowNull: false
+    allowNull: false,
+    validate: {
+      notNull: {
+        msg: "O campo classe é obrigatório."
+      },
+      notEmpty: {
+        msg: "O campo classe é obrigatório."
+      }
+    }
   },
   academico: {
     type: DataTypes.STRING,
-    allowNull: false  
+    allowNull: false,
+    validate: {
+      notNull: {
+        msg: "O campo academico é obrigatório."
+      },
+      notEmpty: {
+        msg: "O campo academico é obrigatório."
+      }
+    }  
   },
   periodo: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      notNull: {
+        msg: "O campo periodo é obrigatório."
+      },
+      notEmpty: {
+        msg: "O campo periodo é obrigatório."
+      }
+    }
   }
 })
 
