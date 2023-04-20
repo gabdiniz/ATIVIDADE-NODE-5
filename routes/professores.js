@@ -33,12 +33,12 @@ router.get("/professores/:id", async (req, res) => {
 
 router.get("/professores/materia/:materia", async (req, res) => {
   try {
-    const professores = await Professores.findAll({where: {materia: req.params.materia}});
+    const professores = await Professores.findAll({ where: { materia: req.params.materia } });
     if (professores) {
       res.status(200).json(professores);
     }
     else {
-      res.status(404).json({ message: "Nenhum professor encontrado."})
+      res.status(404).json({ message: "Nenhum professor encontrado." })
     }
   }
   catch (e) {
@@ -49,12 +49,12 @@ router.get("/professores/materia/:materia", async (req, res) => {
 
 router.get("/professores/turno/:turno", async (req, res) => {
   try {
-    const professores = await Professores.findAll({where: {turno: req.params.turno}});
+    const professores = await Professores.findAll({ where: { turno: req.params.turno } });
     if (professores) {
       res.status(200).json(professores);
     }
     else {
-      res.status(404).json({ message: "Nenhum professor encontrado."})
+      res.status(404).json({ message: "Nenhum professor encontrado." })
     }
   }
   catch (e) {
@@ -65,37 +65,44 @@ router.get("/professores/turno/:turno", async (req, res) => {
 
 router.get("/professores/salario/:salario", async (req, res) => {
   try {
-    const professores = await Professores.findAll({where: { salario: { [Op.gt]: Number(req.params.salario) } }});
+    const professores = await Professores.findAll({ where: { salario: { [Op.gt]: Number(req.params.salario) } } });
     if (professores) {
       res.status(200).json(professores);
     }
     else {
-      res.status(404).json( { message: "Nenhum professor encontrado." })
+      res.status(404).json({ message: "Nenhum professor encontrado." })
     }
   }
   catch (e) {
-    res.status(500).json( { message: "Ocorreu um erro." });
+    res.status(500).json({ message: "Ocorreu um erro." });
   }
 })
 
 router.post("/professores", async (req, res) => {
-  const {nome, materia, salario, turno} = req.body; 
+  const { nome, materia, salario, turno } = req.body;
   try {
-    const novoProfessor = await Professores.create({nome, materia, salario, turno});
+    const novoProfessor = await Professores.create({ nome, materia, salario, turno });
     res.status(201).json(novoProfessor);
   }
   catch (e) {
-    console.log(e);
-    res.status(500).json({ message: "Ocorreu um erro." });
+    if (e.name === 'SequelizeValidationError') {
+      const errors = e.errors.map(error => ({
+        field: error.path,
+        message: error.message,
+      }));
+      res.status(400).json({ errors });
+    } else {
+      res.status(500).json({ message: "Ocorreu um erro." })
+    }
   }
 });
 
 router.put("/professores/:id", async (req, res) => {
-  const {nome, materia, salario, turno} = req.body; 
   try {
+    const { nome, materia, salario, turno } = req.body;
     const professor = await Professores.findByPk(req.params.id);
     if (professor) {
-      professor.update({nome, materia, salario, turno});
+      await professor.update({ nome, materia, salario, turno });
       res.status(200).json("Professor editado.");
     }
     else {
@@ -103,8 +110,15 @@ router.put("/professores/:id", async (req, res) => {
     }
   }
   catch (e) {
-    console.log(e);
-    res.status(500).json({ message: "Ocorreu um erro." });
+    if (e.name === 'SequelizeValidationError') {
+      const errors = e.errors.map(error => ({
+        field: error.path,
+        message: error.message,
+      }));
+      res.status(400).json({ errors });
+    } else {
+      res.status(500).json({ message: "Ocorreu um erro." })
+    }
   }
 });
 
@@ -112,7 +126,7 @@ router.delete("/professores/:id", async (req, res) => {
   try {
     const professor = await Professores.findByPk(req.params.id);
     if (professor) {
-      professor.destroy();
+      await professor.destroy();
       res.status(200).json("Professor removido.");
     }
     else {
