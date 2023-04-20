@@ -1,3 +1,189 @@
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Professores:
+ *       type: object
+ *       required:
+ *         - nome
+ *         - materia
+ *         - salario
+ *         - turno
+ *       properties:
+ *         nome:
+ *           type: string
+ *           description: Nome do professor
+ *         materia:
+ *           type: string
+ *           description: Materia que o professor leciona
+ *         salario:
+ *           type: number
+ *           description: Salario bruto do professor
+ *         turno:
+ *           type: string
+ *           description: Turno de trabalho do professor
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Professores
+ *   description: CRUD professores
+ * /Professores:
+ *   get:
+ *     summary: Listar todos professores
+ *     tags: [Professores]
+ *     responses:
+ *       200:
+ *         description: Listar todos os professores
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Professores'
+ *   post:
+ *     summary: Adicionar professor.
+ *     tags: [Professores]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Professores'
+ *     responses:
+ *       201:
+ *         description: Professor adicionado.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Professores'
+ *       500:
+ *         description: Ocorreu um erro.
+ * /professores/{id}:
+ *   get:
+ *     summary: Listar professor por id.
+ *     tags: [Professores]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Id do professor.
+ *     responses:
+ *       200:
+ *         description: Professor encontrado por id.
+ *         contens:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Professores'
+ *       404:
+ *         description: Professor não encontrado.
+ * /professores/materia/{materia}:
+ *   get:
+ *     summary: Listar professor por materia.
+ *     tags: [Professores]
+ *     parameters:
+ *       - in: path
+ *         name: materia
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Materia do professor.
+ *     responses:
+ *       200:
+ *         description: Professor encontrado por materia.
+ *         contens:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Professores'
+ *       404:
+ *         description: Professor não encontrado.
+ * /professores/turno/{turno}:
+ *   get:
+ *     summary: Listar professor por turno.
+ *     tags: [Professores]
+ *     parameters:
+ *       - in: path
+ *         name: turno
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Turno do professor.
+ *     responses:
+ *       200:
+ *         description: Professor encontrado por turno.
+ *         contens:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Professores'
+ *       404:
+ *         description: Professor não encontrado.
+ * /professores/salario/{salario}:
+ *   get:
+ *     summary: Listar professor por salario > .
+ *     tags: [Professores]
+ *     parameters:
+ *       - in: path
+ *         name: salario
+ *         schema:
+ *           type: number
+ *         required: true
+ *         description: Salario do professor.
+ *     responses:
+ *       200:
+ *         description: Professor encontrado por salario.
+ *         contens:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Professores'
+ *       404:
+ *         description: Professor não encontrado.
+ *   put:
+ *    summary: Atualizar professor por id.
+ *    tags: [Professores]
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *        required: true
+ *        description: Id do professor.
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/Professores'
+ *    responses:
+ *      200:
+ *        description: Professor atualizado.
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Professores'
+ *      404:
+ *        description: Professor não encontrado.
+ *      500:
+ *        description: Ocorreu um erro.
+ *   delete:
+ *     summary: Remover professor por id.
+ *     tags: [Professores]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Id do professor.
+ *
+ *     responses:
+ *       200:
+ *         description: Professor removido.
+ *       404:
+ *         description: Professor não encontrado.
+ */
 const Professores = require("../database/professores");
 const { Router } = require("express");
 const { Op } = require("sequelize");
