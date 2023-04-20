@@ -1,3 +1,187 @@
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Alunos:
+ *       type: object
+ *       required:
+ *         - nome
+ *         - matricula
+ *         - media
+ *         - curso
+ *         - turmaId
+ *       properties:
+ *         nome:
+ *           type: string
+ *           description: Nome do aluno
+ *         matricula:
+ *           type: string
+ *           description: Matricula do aluno
+ *         media:
+ *           type: number
+ *           description: Media do aluno
+ *         curso:
+ *           type: string
+ *           description: Curso do aluno
+ *         turmaId:
+ *           type: number
+ *           description: turma do aluno
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Alunos
+ *   description: CRUD alunos
+ * /Alunos:
+ *   get:
+ *     summary: Listar todos alunos
+ *     tags: [Alunos]
+ *     responses:
+ *       200:
+ *         description: Listar todos os alunos
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Alunos'
+ *   post:
+ *     summary: Adicionar aluno.
+ *     tags: [Alunos]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Alunos'
+ *     responses:
+ *       201:
+ *         description: Aluno adicionado.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Alunos'
+ *       500:
+ *         description: Ocorreu um erro.
+ * /alunos/{id}:
+ *   get:
+ *     summary: Listar aluno por id.
+ *     tags: [Alunos]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Id do aluno.
+ *     responses:
+ *       200:
+ *         description: Aluno encontrado por id.
+ *         contens:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Alunos'
+ *       404:
+ *         description: Aluno não encontrado.
+ *   put:
+ *    summary: Atualizar aluno por id.
+ *    tags: [Alunos]
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *        required: true
+ *        description: Id do aluno.
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/Alunos'
+ *    responses:
+ *      200:
+ *        description: Aluno atualizado.
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Alunos'
+ *      404:
+ *        description: Aluno não encontrado.
+ *      500:
+ *        description: Ocorreu um erro.
+ *   delete:
+ *     summary: Remover aluno por id.
+ *     tags: [Alunos]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Id do aluno.
+ *
+ *     responses:
+ *       200:
+ *         description: Aluno removido.
+ *       404:
+ *         description: Aluno não encontrado.
+ * /alunos/media:
+ *   get:
+ *     summary: Listar alunos abaixo da media.
+ *     tags: [Alunos]
+ *     responses:
+ *       200:
+ *         description: Aluno abaixo da media.
+ *         contens:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Alunos'
+ *       404:
+ *         description: Nenhum aluno encontrado.
+ * /alunos/curso/{curso}:
+ *   get:
+ *     summary: Listar aluno por curso.
+ *     tags: [Alunos]
+ *     parameters:
+ *       - in: path
+ *         name: curso
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Curso do aluno.
+ *     responses:
+ *       200:
+ *         description: Aluno encontrado por curso.
+ *         contens:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Alunos'
+ *       404:
+ *         description: Nenhum aluno não encontrado.
+ * /alunos/matricula/{matricula}:
+ *   get:
+ *     summary: Listar aluno por matricula.
+ *     tags: [Alunos]
+ *     parameters:
+ *       - in: path
+ *         name: matricula
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Matricula do aluno.
+ *     responses:
+ *       200:
+ *         description: Aluno encontrado por matricula.
+ *         contens:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Alunos'
+ *       404:
+ *         description: Aluno não encontrado.
+ */
+
 const Aluno = require("../database/aluno");
 const { Router } = require("express");
 const Turma = require("../database/turma");
