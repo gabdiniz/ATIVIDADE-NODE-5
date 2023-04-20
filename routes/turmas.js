@@ -31,6 +31,39 @@ router.get("/turmas/:id", async (req, res) => {
   }
 });
 
+router.get("/turmas/academico/:academico", async (req, res) => {
+  try {
+    const turmas = await Turma.findAll({ where: { academico: req.params.academico } });
+    if (turmas) {
+      res.status(200).json(turmas);
+    }
+    else {
+      res.status(404).json({ message: "Nenhuma turma encontrada. "});
+    }
+  }
+  catch (e) {
+    console.log(e);
+    res.status(500).json({ message: "Ocorreu um erro." });
+  }
+});
+
+router.get("/turmas/periodo/:periodo", async (req, res) => {
+  try {
+    const turmas = await Turma.findAll({ where: { periodo: req.params.periodo } });
+    if (turmas) {
+      res.status(200).json(turmas);
+    }
+    else {
+      res.status(404).json({ message: "Nenhuma turma encontrada." });
+    }
+  }
+  catch (e) {
+    console.log(e);
+    res.status(500).json({ message: "Ocorreu um erro." });
+  }
+})
+
+
 router.post("/turmas", async (req, res) => {
   const { classe, academico, periodo, professoreId } = req.body;
   try {
