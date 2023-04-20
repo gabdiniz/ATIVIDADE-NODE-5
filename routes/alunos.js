@@ -95,8 +95,23 @@ router.post("/alunos", async (req, res) => {
     }
   }
   catch (e) {
-    console.log(e);
-    res.status(500).json({ message: "Ocorreu um erro." });
+    if (e.name === 'SequelizeValidationError') {
+      const errors = e.errors.map(error => ({
+        field: error.path,
+        message: error.message,
+      }));
+      res.status(400).json({ errors });
+    } 
+    else if (e.name === 'SequelizeUniqueConstraintError') {
+      const errors = e.errors.map(error => ({
+        field: error.path,
+        message: error.message,
+      }));
+      res.status(400).json({ errors });
+    } 
+    else {
+      res.status(500).json({ message: "Ocorreu um erro." });
+    }
   }
 });
 
@@ -119,8 +134,23 @@ router.put("/alunos/:id", async (req, res) => {
     }
   }
   catch (e) {
-    console.log(e);
-    res.status(500).json({ message: "Ocorreu um erro." });
+    if (e.name === 'SequelizeValidationError') {
+      const errors = e.errors.map(error => ({
+        field: error.path,
+        message: error.message,
+      }));
+      res.status(400).json({ errors });
+    } 
+    else if (e.name === 'SequelizeUniqueConstraintError') {
+      const errors = e.errors.map(error => ({
+        field: error.path,
+        message: error.message,
+      }));
+      res.status(400).json({ errors });
+    } 
+    else {
+      res.status(500).json({ message: "Ocorreu um erro." });
+    }
   }
 });
 
